@@ -5,30 +5,39 @@
 <section id="about" class="py-5 fade-in">
   <div class="container">
     <h2 class="text-center mb-5">About Me</h2>
-    <div class="row align-items-center mb-5">
-      <div class="col-md-4 text-center">
-        {% if about.profile_image %}
-          <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" class="profile-img rounded-circle shadow-sm mb-3 img-fluid" style="max-width: 250px;">
-        {% else %}
-          <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-sm mb-3 img-fluid" alt="avatar" style="max-width: 250px;">
-        {% endif %}
-        <h3 class="fw-bold mb-0">{{ about.name }}</h3>
-        <p class="text-muted">{{ about.degree }}</p>
+    <div class="row align-items-center">
+      <!-- Profile Picture Column -->
+      <div class="col-md-4 text-center mb-4 mb-md-0">
+        <div class="profile-picture-container">
+          {% if about.profile_image %}
+            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}'s Profile" class="profile-img rounded-circle shadow-lg img-fluid" style="width: 300px; height: 300px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-lg img-fluid" alt="Default Avatar" style="width: 300px; height: 300px; object-fit: cover;">
+          {% endif %}
+        </div>
+        <h3 class="fw-bold mt-3">{{ about.name }}</h3>
+        <p class="text-muted lead">{{ about.degree }}</p>
       </div>
+
+      <!-- Bio and Certificate Column -->
       <div class="col-md-8">
-        <div class="card shadow-sm p-4">
+        <div class="card shadow-sm p-4 h-100">
           <h4 class="mb-3">Bio</h4>
           <p class="lead">{{ about.bio|linebreaks }}</p>
           {% if about.certificate_image %}
             <div class="mt-4">
-              <h5>Certificate</h5>
-              <img src="{{ about.certificate_image.url }}" class="img-fluid certificate-img rounded shadow-sm" alt="certificate">
+              <h5>Certification</h5>
+              <div class="certificate-container">
+                <img src="{{ about.certificate_image.url }}" class="img-fluid rounded shadow-sm certificate-img" alt="{{ about.name }}'s Certificate" style="max-width: 100%; height: auto;">
+              </div>
             </div>
           {% endif %}
         </div>
       </div>
     </div>
-    <hr>
+
+    <hr class="my-5">
+
     <h3 class="mb-4">Skills</h3>
     <div class="row">
       {% for skill in skills %}
@@ -49,5 +58,44 @@
     </div>
   </div>
 </section>
+
+<style>
+  .profile-picture-container {
+    position: relative;
+    border: 5px solid var(--primary);
+    border-radius: 50%;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  .profile-picture-container:hover {
+    transform: scale(1.05);
+  }
+  .profile-img {
+    display: block;
+    margin: 0 auto;
+  }
+  .certificate-container {
+    margin-top: 15px;
+    max-height: 300px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+  }
+  .certificate-img {
+    transition: transform 0.3s ease;
+  }
+  .certificate-container:hover .certificate-img {
+    transform: scale(1.1);
+  }
+  .skill-progress {
+    height: 25px;
+    border-radius: 12px;
+  }
+  .skill-row {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+</style>
 
 {% endblock %}
