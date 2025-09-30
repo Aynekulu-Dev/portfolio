@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-local-secret-key-change-t
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # Hosts/domain names that are valid for this site
-ALLOWED_HOSTS = ['your-server-ip', 'your-domain.com', 'localhost', '127.0.0.1']
+# Heroku provides the HOSTNAME environment variable
+ALLOWED_HOSTS = ['*']  # Use '*' for Heroku, but restrict later with your app domain
 
 # Application definition
 INSTALLED_APPS = [
@@ -33,13 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',  # Your app
-    'captcha',  # For CAPTCHA
-    'pwa',  # If using Progressive Web App
+    'main',
+    'captcha',
+    'pwa',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,12 +72,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 # Database
-# Using SQLite for simplicity; configure path for production
+# Use SQLite by default, but allow Heroku to override with DATABASE_URL if needed
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Ensure this file exists on the server
-    }
+    'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600)
 }
 
 # Password validation
@@ -95,16 +95,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Addis_Ababa'  # Set to Ethiopia's time zone
+TIME_ZONE = 'Africa/Addis_Ababa'
 USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Where collected static files will be stored
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Optional: for development static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Heroku collects static files here
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Optimize static files
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Media files (e.g., profile pictures)
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -112,20 +113,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Security Settings for Production
-SECURE_SSL_REDIRECT = not DEBUG  # Redirect to HTTPS in production
-SESSION_COOKIE_SECURE = not DEBUG  # Secure cookies with HTTPS
-CSRF_COOKIE_SECURE = not DEBUG  # Secure CSRF token with HTTPS
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-# Email Configuration (optional, for contact form)
+# Email Configuration (optional)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'your-email@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'your-app-password')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'your-email@gmail.com')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'Aynekulu.molla@astu.edu.et')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kavy peey haos sfox ')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Aynekulu.molla@gastu.edu.et')
 
 # CAPTCHA Settings
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
