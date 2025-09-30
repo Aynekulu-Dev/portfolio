@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Project, ContactMessage
 from .models import About
-rom .models import skill
+from .models import Skill
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
