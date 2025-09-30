@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from main import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main.urls')),
+    path('', views.home, name='home'),
+    path('about/', views.about_view, name='about'),
+    path('projects/', views.projects_view, name='projects'),
+    path('contact/', views.contact_view, name='contact'),
+    path('blog/', views.blog_view, name='blog'),
+    path('admin/', admin.site.urls),  # Single inclusion of admin URLs
+    path('captcha/', include('captcha.urls')),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
