@@ -1,65 +1,32 @@
 {% extends 'base.html' %}
-{% block title %}Projects - Portfolio{% endblock %}
+{% block title %}Projects - Aynekulu{% endblock %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">Projects</h2>
-  <div>
-    <a class="btn btn-outline-primary" href="/projects/?tech=django">Django</a>
-    <a class="btn btn-outline-primary" href="/projects/?tech=python">Python</a>
-    <a class="btn btn-outline-primary" href="/projects/">All</a>
-  </div>
-</div>
-
-<div class="row g-4">
-  {% for project in projects %}
-  <div class="col-md-4">
-    <div class="card h-100 project-card shadow-sm">
-      {% if project.image %}
-        <img src="{{ project.image.url }}" class="card-img-top card-img-clickable" alt="{{ project.title }}" data-title="{{ project.title }}" data-desc="{{ project.description }}" data-image="{{ project.image.url }}">
-      {% else %}
-        <img src="{% static 'images/project-placeholder.png' %}" class="card-img-top card-img-clickable" alt="{{ project.title }}" data-title="{{ project.title }}" data-desc="{{ project.description }}" data-image="{% static 'images/project-placeholder.png' %}">
-      {% endif %}
-      <div class="card-body">
-        <h5 class="card-title">{{ project.title }}</h5>
-        <p class="card-text">{{ project.description|truncatewords:18 }}</p>
-        <p class="mb-1"><small class="text-muted">Tech: {{ project.tech_stack }}</small></p>
-      </div>
-      <div class="card-footer d-flex justify-content-between">
-        <div>
-          {% if project.github_link %}
-            <a href="{{ project.github_link }}" class="btn btn-sm btn-dark" target="_blank">GitHub</a>
-          {% endif %}
-          {% if project.live_demo %}
-            <a href="{{ project.live_demo }}" class="btn btn-sm btn-primary" target="_blank">Live</a>
-          {% endif %}
+<section id="projects" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">My Projects</h2>
+    <div class="row g-4">
+      {% for project in projects %}
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+            <div class="d-flex justify-content-between mt-3">
+              {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
+              {% endif %}
+              {% if project.demo_url %}
+              <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+              {% endif %}
+            </div>
+          </div>
         </div>
-        <button class="btn btn-sm btn-outline-secondary view-more-btn" data-title="{{ project.title }}" data-desc="{{ project.description }}" data-image="{% if project.image %}{{ project.image.url }}{% else %}{% static 'images/project-placeholder.png' %}{% endif %}">View</button>
       </div>
+      {% endfor %}
     </div>
   </div>
-  {% empty %}
-    <p class="text-muted">No projects yet. Add some via admin!</p>
-  {% endfor %}
-</div>
-
-<!-- Project Modal -->
-<div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="projectModalTitle"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img id="projectModalImage" src="" class="img-fluid mb-3" alt="project image">
-        <p id="projectModalDesc"></p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+</section>
 
 {% endblock %}

@@ -1,52 +1,26 @@
 {% extends 'base.html' %}
-{% block title %}About - Aynekulu Molla{% endblock %}
+{% block title %}About Me - Aynekulu{% endblock %}
 {% block content %}
 
-<div class="row align-items-center mb-5">
-  <div class="col-md-4 text-center">
-    {% if about.profile_image %}
-      <img src="{{ about.profile_image.url }}" alt="{{ about.name }}" class="profile-img rounded-circle shadow-sm mb-3">
-    {% else %}
-      <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-sm mb-3" alt="avatar">
-    {% endif %}
-    <h3 class="fw-bold mb-0">{{ about.name }}</h3>
-    <p class="text-muted">{{ about.degree }}</p>
-  </div>
-
-  <div class="col-md-8">
-    <div class="card shadow-sm p-4">
-      <h4 class="mb-3">About Me</h4>
-      <p class="lead">{{ about.bio|linebreaks }}</p>
-
-      {% if about.certificate_image %}
-        <div class="mt-4">
-          <h5>Certificate</h5>
-          <img src="{{ about.certificate_image.url }}" class="img-fluid certificate-img rounded shadow-sm" alt="certificate">
-        </div>
-      {% endif %}
-    </div>
-  </div>
-</div>
-
-<hr>
-
-<h3 class="mb-4">Skills</h3>
-<div class="row">
-  {% for skill in skills %}
-  <div class="col-md-6 mb-3">
-    <div class="skill-row">
-      <div class="d-flex justify-content-between">
-        <h6 class="mb-1">{{ skill.name }}</h6>
-        <small class="text-muted">{{ skill.level }}%</small>
+<section id="about" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">About Me</h2>
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center mb-4">
+        <img src="{% static 'images/profile.jpg' %}" class="img-fluid rounded-circle shadow" alt="Aynekulu Molla">
       </div>
-      <div class="progress skill-progress" data-level="{{ skill.level }}">
-        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+      <div class="col-md-8">
+        <p>Hello! I'm Aynekulu Molla, a passionate Full Stack Developer dedicated to building modern, responsive, and user-friendly web applications. I love coding, learning new technologies, and turning ideas into reality.</p>
+        <p>My goal is to create websites and applications that are not only functional but also visually appealing and intuitive for users.</p>
+        <ul class="list-unstyled">
+          <li><strong>Email:</strong> Aynekulu4341@gmail.com</li>
+          <li><strong>Phone:</strong> +251-XXXXXXXXX</li>
+          <li><strong>Location:</strong> Ethiopia</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary mt-3">Get in Touch</a>
       </div>
     </div>
   </div>
-  {% empty %}
-    <p class="text-muted">No skills yet — add them from the admin panel.</p>
-  {% endfor %}
-</div>
+</section>
 
 {% endblock %}
