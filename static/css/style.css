@@ -1,21 +1,17 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Arial', sans-serif;
+    scroll-behavior: smooth;
 }
 
-.hero {
-    background: url('../images/hero-bg.jpg') no-repeat center center;
-    background-size: cover;
-    color: #fff;
+.navbar-brand {
+    font-size: 1.5rem;
 }
 
-.skill-card {
-    transition: transform 0.3s;
+section {
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
-.skill-card:hover {
-    transform: translateY(-5px);
-}
-
-footer {
-    background-color: #212529;
+.progress-bar {
+    background-color: #0d6efd;
 }
