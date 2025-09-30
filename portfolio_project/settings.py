@@ -10,7 +10,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'django.contrib.admin',  # Must be present
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'pwa',
-    'captcha',
+    'captcha',  # For django-recaptcha 3.0.0
 ]
 
 MIDDLEWARE = [
@@ -64,6 +64,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']  # Suppress test key warning
 RECAPTCHA_PUBLIC_KEY = 'your_public_key_here'  # Replace with your public key
 RECAPTCHA_PRIVATE_KEY = 'your_private_key_here'  # Replace with your private key
@@ -91,7 +92,6 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'Aynekulu.molla@astu.edu.et'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'jgkn scch sgwo ehze')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
 # PWA Settings
 PWA_APP_NAME = 'Aynekulu Portfolio'
 PWA_APP_DESCRIPTION = "Aynekulu Molla's professional portfolio"
@@ -102,4 +102,3 @@ PWA_APP_SCOPE = '/'
 PWA_APP_ORIENTATION = 'any'
 PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
-
