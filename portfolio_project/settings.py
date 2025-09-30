@@ -24,8 +24,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-local-secret-key-change-t
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 # Hosts/domain names that are valid for this site
-# Heroku provides the HOSTNAME environment variable
-ALLOWED_HOSTS = ['*']  # Use '*' for Heroku, but restrict later with your app domain
+# Replace 'yourusername' with your actual PythonAnywhere username
+ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -42,7 +42,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,7 +71,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 # Database
-# Use SQLite by default, but allow Heroku to override with DATABASE_URL if needed
+# Use SQLite by default, suitable for PythonAnywhere
 DATABASES = {
     'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600)
 }
@@ -100,9 +99,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
+# PythonAnywhere serves static files, so adjust configuration
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Heroku collects static files here
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Optimize static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # For collectstatic, but PythonAnywhere handles serving
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Media files
@@ -125,8 +124,8 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'Aynekulu.molla@astu.edu.et')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kavy peey haos sfox ')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Aynekulu.molla@gastu.edu.et')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'kavy peey haos sfox ')  # Ensure this is an App Password
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Aynekulu.molla@astu.edu.et')
 
 # CAPTCHA Settings
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
