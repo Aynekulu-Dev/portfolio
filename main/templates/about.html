@@ -6,7 +6,6 @@
   <div class="container">
     <h2 class="text-center mb-5">About Me</h2>
     <div class="row align-items-center">
-      <!-- Profile Picture Column -->
       <div class="col-md-4 text-center mb-4 mb-md-0">
         <div class="profile-picture-container">
           {% if about.profile_image %}
@@ -18,12 +17,15 @@
         <h3 class="fw-bold mt-3">{{ about.name }}</h3>
         <p class="text-muted lead">{{ about.degree }}</p>
       </div>
-
-      <!-- Bio and Certificate Column -->
       <div class="col-md-8">
         <div class="card shadow-sm p-4 h-100">
           <h4 class="mb-3">Bio</h4>
-          <p class="lead">{{ about.bio|linebreaks }}</p>
+          <p class="lead">
+            I’m Aynekulu Molla, a passionate Software Engineering graduate from Adama Science and Technology University in Ethiopia. My journey in tech began with a curiosity for solving problems through code, leading me to master full-stack development with Django, Python, and modern frameworks. Beyond coding, I’ve delved into data science, where I analyze complex datasets to uncover insights, and machine learning, where I build models to predict trends—like my COVID-19 analysis project.
+          </p>
+          <p class="lead">
+            My dream is to leverage AI to create innovative solutions that impact lives positively. I thrive on challenges, from designing responsive web applications to exploring neural networks. In my free time, I enjoy experimenting with new technologies, contributing to open-source projects, and learning from the global tech community. I’m excited to collaborate, grow, and contribute to the future of technology!
+          </p>
           {% if about.certificate_image %}
             <div class="mt-4">
               <h5>Certification</h5>
@@ -81,11 +83,11 @@
     border: 2px solid #ddd;
     border-radius: 5px;
   }
-  .certificate-img {
-    transition: transform 0.3s ease;
-  }
   .certificate-container:hover .certificate-img {
     transform: scale(1.1);
+  }
+  .certificate-img {
+    transition: transform 0.3s ease;
   }
   .skill-progress {
     height: 25px;

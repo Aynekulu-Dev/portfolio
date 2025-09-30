@@ -1,22 +1,18 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en" class="{% if request.COOKIES.mode == 'dark' %}dark-mode{% else %}light-mode{% endif %}">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Aynekulu Molla, Full Stack Developer, Data Scientist, ML/AI Engineer">
-    <meta name="keywords" content="Aynekulu Molla, Portfolio, Full Stack, Data Science, Machine Learning, AI">
     <title>{% block title %}Aynekulu Molla Portfolio{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="{% static 'js/script.js' %}" defer></script>
-    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    {% if 'pwa' in INSTALLED_APPS %}
+    {% include 'pwa_manifest.html' %}
+    {% endif %}
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<body class="{% if request.COOKIES.theme == 'dark' or localStorage.getItem('theme') === 'dark' %}dark-mode{% endif %}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">Aynekulu Molla</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,66 +20,89 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
-                        <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
-                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=all">All</a></li>
-                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=data-science">Data Science</a></li>
-                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=full-stack">Full Stack</a></li>
-                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=ml-ai">ML/AI</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                     <li class="nav-item">
-                        <button class="btn btn-outline-light mode-toggle" id="modeToggle">Toggle Mode</button>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'projects' %}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog' %}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link btn btn-outline-dark" id="theme-toggle">Toggle Dark Mode</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2025 Aynekulu Molla. All rights reserved.</p>
-        <a href="{% static 'files/resume.pdf' %}" class="btn btn-outline-light btn-sm mt-2" download>Download Resume</a>
-        <p class="mt-2"><a href="https://calendly.com/aynekulu" target="_blank" class="text-muted">Schedule a Meeting</a></p>
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <h5>Connect With Me</h5>
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/aynekulumolla" target="_blank" class="text-light me-3">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                <a href="https://github.com/Aynekulu-Dev" target="_blank" class="text-light me-3">
+                    <i class="fab fa-github fa-2x"></i>
+                </a>
+                <a href="https://twitter.com/AynekuluDev" target="_blank" class="text-light">
+                    <i class="fab fa-twitter fa-2x"></i>
+                </a>
+            </div>
+            <p class="mt-3">&copy; 2025 Aynekulu Molla. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script>
-  // Create a 3D scene
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true }); // Alpha for transparency
-  renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3); // Adjust size
-  document.getElementById('hero').appendChild(renderer.domElement);
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
 
-  // Create a cube
-  const geometry = new THREE.BoxGeometry(2, 2, 2);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.7 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-  camera.position.z = 5;
+        // 3D Cube
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3);
+        document.getElementById('hero').appendChild(renderer.domElement);
 
-  // Animation
-  function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }
-  animate();
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const material = new THREE.MeshBasicMaterial({ color: 0x007bff, transparent: true, opacity: 0.8 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        camera.position.z = 5;
 
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3);
-  });
-</script>
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3);
+        });
+    </script>
 </body>
 </html>

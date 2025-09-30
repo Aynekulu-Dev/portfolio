@@ -1,158 +1,72 @@
 {% extends 'base.html' %}
-{% block title %}Projects - Aynekulu{% endblock %}
+{% block title %}Projects - Aynekulu Molla{% endblock %}
 {% block content %}
 
-<!-- Filters Section -->
-<section class="py-3 bg-light">
-  <div class="container">
-    <h5 class="text-center mb-3">Filter Projects</h5>
-    <div class="text-center">
-      <button class="btn btn-outline-primary me-2 filter-btn" data-filter="all">All</button>
-      <button class="btn btn-outline-primary me-2 filter-btn" data-filter="data-science">Data Science</button>
-      <button class="btn btn-outline-primary me-2 filter-btn" data-filter="full-stack">Full Stack</button>
-      <button class="btn btn-outline-primary filter-btn" data-filter="ml-ai">ML/AI</button>
-    </div>
-  </div>
-</section>
-
-<section id="projects" class="py-5">
+<section id="projects" class="py-5 fade-in">
   <div class="container">
     <h2 class="text-center mb-5">My Projects</h2>
-    <div class="row g-4 project-grid">
+    <div class="mb-4 text-center">
+      <button class="btn btn-outline-primary me-2" data-filter="all">All</button>
+      <button class="btn btn-outline-primary me-2" data-filter="web">Web Development</button>
+      <button class="btn btn-outline-primary me-2" data-filter="data">Data Science</button>
+      <button class="btn btn-outline-primary" data-filter="ml">Machine Learning</button>
+    </div>
+    <div class="row project-container" id="project-container">
       {% for project in projects %}
-      <div class="col-lg-4 col-md-6 project-item {% if 'COVID' in project.title %}data-science{% elif 'E-Commerce' in project.title %}full-stack{% elif 'Chatbot' in project.title %}ml-ai{% endif %}">
-        <div class="card h-100 shadow-sm project-card" data-bs-toggle="modal" data-bs-target="#projectModal{{ forloop.counter }}">
-          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" loading="lazy">
+      <div class="col-md-4 mb-4 project-item" data-category="{{ project.category|default:'all' }}">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
           <div class="card-body">
             <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text">{{ project.description|truncatewords:15 }}</p>
-            <div class="d-flex justify-content-between mt-3">
-              {% if project.github_url %}
-              <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
-              {% endif %}
-              {% if project.demo_url %}
-              <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
-              {% endif %}
-            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal{{ project.id }}">View Details</button>
           </div>
         </div>
       </div>
 
-      <!-- Modal for Project Details -->
-      <div class="modal fade" id="projectModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="projectModalLabel{{ forloop.counter }}" aria-hidden="true">
+      <!-- Modal -->
+      <div class="modal fade" id="projectModal{{ project.id }}" tabindex="-1" aria-labelledby="projectModalLabel{{ project.id }}" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="projectModalLabel{{ forloop.counter }}">{{ project.title }}</h5>
+              <h5 class="modal-title" id="projectModalLabel{{ project.id }}">{{ project.title }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <img src="{{ project.image.url }}" class="img-fluid mb-3" alt="{{ project.title }}" loading="lazy">
+              <img src="{{ project.image.url }}" class="img-fluid mb-3" alt="{{ project.title }}" style="max-height: 300px; object-fit: cover;">
               <p>{{ project.description }}</p>
-              <strong>Technologies:</strong> {% if 'COVID' in project.title %}Python, Pandas, Matplotlib, Seaborn{% elif 'E-Commerce' in project.title %}Django, React, Bootstrap{% elif 'Chatbot' in project.title %}Python, TensorFlow, NLTK{% else %}Various{% endif %}<br>
-              {% if project.github_url %}<strong>GitHub:</strong> <a href="{{ project.github_url }}" target="_blank">{{ project.github_url }}</a><br>{% endif %}
-              {% if project.demo_url %}<strong>Demo:</strong> <a href="{{ project.demo_url }}" target="_blank">{{ project.demo_url }}</a>{% endif %}
-              <!-- Sample Chart for COVID Project -->
-              {% if 'COVID' in project.title %}
-              <div style="height: 300px; margin: 20px 0;">
-                <canvas id="correlationChart{{ forloop.counter }}"></canvas>
-                <script>
-                  const ctx{{ forloop.counter }} = document.getElementById('correlationChart{{ forloop.counter }}').getContext('2d');
-                  new Chart(ctx{{ forloop.counter }}, {
-                    type: 'scatter',
-                    data: {
-                      datasets: [{
-                        label: 'Correlation Heatmap (Sample)',
-                        data: [
-                          { x: 'total_cases', y: 0.95 },
-                          { x: 'total_deaths', y: 0.85 },
-                          { x: 'new_cases', y: 0.80 },
-                          { x: 'total_vaccinations', y: 0.90 }
-                        ],
-                        backgroundColor: 'rgba(0, 123, 255, 0.6)',
-                        pointRadius: 10
-                      }]
-                    },
-                    options: {
-                      scales: { x: { title: { display: true, text: 'Metrics' } }, y: { title: { display: true, text: 'Correlation' } } },
-                      plugins: { legend: { display: false } }
-                    }
-                  });
-                </script>
-              </div>
+              {% if project.github_url %}
+                <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark me-2">GitHub</a>
               {% endif %}
+              {% if project.demo_url %}
+                <a href="{{ project.demo_url }}" target="_blank" class="btn btn-outline-primary">Live Demo</a>
+              {% endif %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
       </div>
       {% empty %}
-      <div class="col-12 text-center">
-        <p class="text-muted">No projects yet—add some from the admin panel!</p>
-      </div>
+      <p class="text-muted">No projects yet—add them from the admin panel!</p>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<style>
-  .project-grid {
-    transition: all 0.3s ease;
-  }
-  .project-item {
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-  .project-item.hidden {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  .filter-btn.active {
-    background-color: var(--primary);
-    color: var(--text-light);
-  }
-  .project-card {
-    transition: transform 0.3s ease;
-  }
-  .project-card:hover {
-    transform: translateY(-5px);
-  }
-</style>
-
 <script>
-  // Filter functionality with URL query support
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      window.history.pushState({}, '', `?filter=${filter}`);
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filterProjects(filter);
+  document.querySelectorAll('.btn[data-filter]').forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+      document.querySelectorAll('.project-item').forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
     });
-  });
-
-  function filterProjects(filter) {
-    document.querySelectorAll('.project-item').forEach(item => {
-      if (filter === 'all' || item.classList.contains(filter)) {
-        item.style.display = 'block';
-        setTimeout(() => item.classList.remove('hidden'), 50);
-      } else {
-        item.classList.add('hidden');
-        setTimeout(() => item.style.display = 'none', 500);
-      }
-    });
-  }
-
-  // Initial Load Filter from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialFilter = urlParams.get('filter') || 'all';
-  document.querySelector(`[data-filter="${initialFilter}"]`).classList.add('active');
-  filterProjects(initialFilter);
-
-  // Mode Toggle
-  document.getElementById('modeToggle').addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
-    document.cookie = `mode=${document.body.classList.contains('dark-mode') ? 'dark' : 'light'}; path=/`;
   });
 </script>
 

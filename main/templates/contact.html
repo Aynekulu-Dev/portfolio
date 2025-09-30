@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Contact Me - Aynekulu{% endblock %}
+{% block title %}Contact Me - Aynekulu Molla{% endblock %}
 {% block content %}
 
 <section id="contact" class="py-5 bg-light fade-in">
@@ -14,7 +14,7 @@
             <div class="col-md-6">{{ form.email }}</div>
           </div>
           <div class="mb-3">{{ form.message }}</div>
-          <div class="mb-3">{{ form.captcha }}</div>  <!-- Add CAPTCHA field -->
+          <div class="mb-3">{{ form.captcha }}</div> <!-- reCAPTCHA field -->
           <button type="submit" class="btn btn-primary w-100">Send Message</button>
           {% if messages %}
             {% for message in messages %}
