@@ -1,62 +1,21 @@
-/* Profile image */
-.profile-img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border: 6px solid #fff;
-  margin-top: -80px;
+body {
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* Certificate */
-.certificate-img {
-  max-width: 100%;
-  border-radius: 8px;
+.hero {
+    background: url('../images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
 }
 
-/* Card clickable image */
-.card-img-clickable {
-  cursor: pointer;
-  object-fit: cover;
-  height: 220px;
+.skill-card {
+    transition: transform 0.3s;
 }
 
-/* Project card hover */
-.project-card:hover {
-  transform: translateY(-6px);
-  transition: transform .25s ease, box-shadow .25s ease;
-  box-shadow: 0 18px 40px rgba(12, 23, 46, 0.12);
+.skill-card:hover {
+    transform: translateY(-5px);
 }
 
-/* Skill progress pill */
-.skill-progress {
-  height: 18px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: linear-gradient(90deg, #eef3ff, #f7fbff);
-}
-
-.skill-progress .progress-bar {
-  height: 100%;
-  transition: width 0.9s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
-
-/* Buttons */
-.btn-primary {
-  background-image: linear-gradient(135deg,#0066ff,#007bff);
-  border: none;
-}
-
-/* Card shadow */
-.card.shadow-sm {
-  border: none;
-}
-
-/* Small responsive tweaks */
-@media (max-width: 767px) {
-  .card-img-clickable { height: 180px; }
-  .profile-img { width: 120px; height: 120px; margin-top: -60px; }
+footer {
+    background-color: #212529;
 }

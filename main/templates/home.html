@@ -1,60 +1,74 @@
 {% extends 'base.html' %}
-{% block title %}Home - Portfolio{% endblock %}
+{% block title %}Home | Aynekulu Molla{% endblock %}
 {% block content %}
-
 <!-- Hero Section -->
-<div class="text-center py-5 bg-light rounded shadow-sm mb-5">
-    <h1 class="display-4 fw-bold">Hi, I'm Aynekulu Molla</h1>
-    <p class="lead">Software Engineer | Python | Django | Machine Learning</p>
-    <a href="/projects/" class="btn btn-primary btn-lg mt-3">View My Projects</a>
-</div>
+<section class="hero text-center py-5 bg-light">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Hi, I'm Aynekulu Molla</h1>
+        <p class="lead">I build modern and responsive web applications</p>
+        <a href="#projects" class="btn btn-primary mt-3">View My Work</a>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Projects</h2>
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ project.link }}" target="_blank" class="btn btn-outline-primary w-100">View Project</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 <!-- Skills Section -->
-<h2 class="mb-4">My Skills</h2>
-<div class="row mb-5">
-    {% for skill in skills %}
-    <div class="col-md-6 mb-3">
-        <h5 class="fw-semibold">{{ skill.name }}</h5>
-        <div class="progress rounded-pill" style="height: 25px;">
-            <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">
-                {{ skill.level }}%
+<section id="skills" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Skills</h2>
+        <div class="row">
+            {% for skill in skills %}
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="skill-card p-3 text-center border rounded shadow-sm">
+                    <h5>{{ skill.name }}</h5>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-    {% empty %}
-        <p>No skills added yet. Add via admin panel.</p>
-    {% endfor %}
-</div>
+</section>
 
-<!-- Quick Projects Preview -->
-<h2 class="mb-4">Featured Projects</h2>
-<div class="row">
-    {% for project in projects|slice:":3" %}
-    <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm hover-effect">
-            {% if project.image %}
-                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description|truncatewords:15 }}</p>
-                <p><strong>Tech:</strong> {{ project.tech_stack }}</p>
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Contact Me</h2>
+        <form method="POST" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="name" placeholder="Your Name" class="form-control" required>
             </div>
-            <div class="card-footer">
-                {% if project.github_link %}
-                    <a href="{{ project.github_link }}" class="btn btn-sm btn-dark" target="_blank">GitHub</a>
-                {% endif %}
-                {% if project.live_demo %}
-                    <a href="{{ project.live_demo }}" class="btn btn-sm btn-primary" target="_blank">Live</a>
-                {% endif %}
+            <div class="mb-3">
+                <input type="email" name="email" placeholder="Your Email" class="form-control" required>
             </div>
-        </div>
+            <div class="mb-3">
+                <textarea name="message" placeholder="Your Message" class="form-control" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
     </div>
-    {% endfor %}
-</div>
-
-<div class="text-center mt-3">
-    <a href="/projects/" class="btn btn-outline-primary">See All Projects</a>
-</div>
-
+</section>
 {% endblock %}
