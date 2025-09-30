@@ -19,3 +19,18 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.email}"
+class About(models.Model):
+    name = models.CharField(max_length=100, default="Aynekulu Molla")
+    bio = models.TextField()
+    degree = models.CharField(max_length=200, default="Bachelor's Degree")
+    profile_image = models.ImageField(upload_to='about/', blank=True, null=True)
+    certificate_image = models.ImageField(upload_to='about/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+class Skill(models.Model):
+    name = models.CharField(max_length=50)        # Skill name, e.g., Python
+    level = models.IntegerField(default=50)       # Skill proficiency 0-100%
+
+    def __str__(self):
+        return self.name
