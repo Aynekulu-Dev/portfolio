@@ -1,8 +1,45 @@
 {% extends 'base.html' %}
-{% block title %}Contact{% endblock %}
+{% block title %}Contact - Aynekulu Molla{% endblock %}
 {% block content %}
-<h2>Contact Me</h2>
-<form method="post">{% csrf_token %}{{ form.as_p }}
-<button type="submit" class="btn btn-primary">Send Message</button>
-</form>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Contact Me</h2>
+    <p class="text-muted">Have a project or want to say hi? Use the form below.</p>
+
+    <form id="contactForm" method="post" novalidate>
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        <div class="invalid-feedback">Please enter your name.</div>
+      </div>
+      <div class="mb-3">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        <div class="invalid-feedback">Please enter a valid email.</div>
+      </div>
+      <div class="mb-3">
+        {{ form.message.label_tag }}
+        {{ form.message }}
+        <div class="invalid-feedback">Please enter a message.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4">
+      <h5>Contact Info</h5>
+      <p><strong>Email:</strong> <a href="mailto:{{ settings.DEFAULT_FROM_EMAIL }}">{{ settings.DEFAULT_FROM_EMAIL }}</a></p>
+      <p><strong>Location:</strong> Addis Ababa, Ethiopia</p>
+      <h6 class="mt-4">Or connect on</h6>
+      <p>
+        <a href="https://github.com/YOUR_USERNAME" target="_blank" class="me-2">GitHub</a> |
+        <a href="https://www.linkedin.com/in/YOUR_PROFILE" target="_blank" class="ms-2">LinkedIn</a>
+      </p>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
