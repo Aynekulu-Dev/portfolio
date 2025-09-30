@@ -123,3 +123,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # DEFAULT PRIMARY KEY FIELD TYPE
 # ----------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'Aynekulu.molla@astu.edu'       # 👈 replace with your email
+EMAIL_HOST_PASSWORD = 'jgkn scch sgwo ehze '      # 👈 use an app password, not your real Gmail password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
