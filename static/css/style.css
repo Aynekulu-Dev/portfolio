@@ -26,3 +26,16 @@ section {
   transform: translateY(0);
 }
 
+#hero {
+  background: url('../images/hero-bg.jpg') center center/cover no-repeat;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Skill Bars Animation */
+.progress-bar {
+  transition: width 2s ease-in-out;
+}
+

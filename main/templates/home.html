@@ -2,48 +2,26 @@
 {% block title %}Home - Aynekulu{% endblock %}
 {% block content %}
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="/">Aynekulu Molla</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <!-- Hero Section -->
-<header class="bg-primary text-white text-center py-5">
-  <h1>Hi, I'm Aynekulu Molla</h1>
-  <p>Full Stack Developer & Designer</p>
-</header>
-
-<!-- About Section -->
-<section id="about" class="py-5">
+<section id="hero" class="text-center text-white bg-dark py-5 fade-in">
   <div class="container">
-    <h2 class="text-center mb-4">About Me</h2>
-    <p class="text-center">I am a passionate developer creating modern and responsive websites and applications.</p>
+    <h1 class="display-4 fw-bold">Hi, I'm Aynekulu Molla</h1>
+    <p class="lead mb-4">Full Stack Developer | Web Enthusiast | Problem Solver</p>
+    <a href="#projects" class="btn btn-primary btn-lg">View My Work</a>
+    <a href="#contact" class="btn btn-outline-light btn-lg ms-2">Contact Me</a>
   </div>
 </section>
 
 <!-- Skills Section -->
-<section id="skills" class="py-5 bg-light">
+<section id="skills" class="py-5 fade-in">
   <div class="container">
-    <h2 class="text-center mb-4">Skills</h2>
-    <div class="row">
+    <h2 class="text-center mb-5">My Skills</h2>
+    <div class="row g-4">
       {% for skill in skills %}
-      <div class="col-md-4 mb-3">
+      <div class="col-md-6">
         <h5>{{ skill.name }}</h5>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-primary" role="progressbar" style="width: {{ skill.level }}%;" aria-valuenow="{{ skill.level }}" aria-valuemin="0" aria-valuemax="100">{{ skill.level }}%</div>
         </div>
       </div>
       {% endfor %}
@@ -51,44 +29,53 @@
   </div>
 </section>
 
-<!-- Projects Section -->
-<section id="projects" class="py-5">
+<!-- Featured Projects Carousel -->
+<section id="projects" class="py-5 bg-light fade-in">
   <div class="container">
-    <h2 class="text-center mb-4">Projects</h2>
-    <div class="row">
-      {% for project in projects %}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
-          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ project.title }}</h5>
-            <p class="card-text">{{ project.description }}</p>
-            {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>{% endif %}
-            {% if project.demo_url %}<a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary btn-sm">Demo</a>{% endif %}
+    <h2 class="text-center mb-5">Featured Projects</h2>
+    <div id="projectsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for project in projects %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="card shadow-sm">
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ project.title }}</h5>
+                  <p class="card-text">{{ project.description|truncatewords:25 }}</p>
+                  <div>
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
+                    {% endif %}
+                    {% if project.demo_url %}
+                    <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary btn-sm">Live Demo</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
+      <button class="carousel-control-prev" type="button" data-bs-target="#projectsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#projectsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
   </div>
 </section>
 
-<!-- Contact Section -->
-<section id="contact" class="py-5 bg-light">
+<!-- Call to Action -->
+<section class="text-center py-5 fade-in">
   <div class="container">
-    <h2 class="text-center mb-4">Contact Me</h2>
-    <form method="post" action="{% url 'contact' %}">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-md-6 mb-3">{{ form.name }}</div>
-        <div class="col-md-6 mb-3">{{ form.email }}</div>
-      </div>
-      <div class="mb-3">{{ form.subject }}</div>
-      <div class="mb-3">{{ form.message }}</div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">Send Message</button>
-      </div>
-    </form>
+    <h3>Interested in working together?</h3>
+    <a href="#contact" class="btn btn-primary btn-lg mt-3">Let's Talk</a>
   </div>
 </section>
 
