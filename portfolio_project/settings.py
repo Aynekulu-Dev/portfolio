@@ -1,23 +1,11 @@
-"""
-Django settings for portfolio_project.
-"""
-
 from pathlib import Path
-import os
 
-# ----------------------------------------------------
-# BASE SETTINGS
-# ----------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-key-to-something-unique'
+SECRET_KEY = 'django-insecure-change-this-to-your-key'
 DEBUG = True
-ALLOWED_HOSTS = []   # add '127.0.0.1' or your domain when deploying
+ALLOWED_HOSTS = []
 
-
-# ----------------------------------------------------
-# INSTALLED APPS
-# ----------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,15 +13,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # custom apps
-    'main',   # 👈 your portfolio app
+    'main',  # 👈 your app
 ]
 
-
-# ----------------------------------------------------
-# MIDDLEWARE
-# ----------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -44,16 +26,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# ----------------------------------------------------
-# URLS & WSGI
-# ----------------------------------------------------
 ROOT_URLCONF = 'portfolio_project.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # global templates folder
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,49 +46,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
-
-# ----------------------------------------------------
-# DATABASE
-# ----------------------------------------------------
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',   # for dev
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
-# ----------------------------------------------------
-# PASSWORD VALIDATION
-# ----------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# ----------------------------------------------------
-# INTERNATIONALIZATION
-# ----------------------------------------------------
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Addis_Ababa'   # local timezone
+TIME_ZONE = 'Africa/Addis_Ababa'
 USE_I18N = True
 USE_TZ = True
 
-
-# ----------------------------------------------------
-# STATIC & MEDIA FILES
-# ----------------------------------------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -118,10 +72,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
-
-# ----------------------------------------------------
-# DEFAULT PRIMARY KEY FIELD TYPE
-# ----------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings

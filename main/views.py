@@ -1,5 +1,8 @@
-from django.shortcuts import render
-from .models import Project
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Project, ContactMessage
+from .forms import ContactForm
 
 def home(request):
     return render(request, 'home.html')
@@ -19,17 +22,13 @@ def contact(request):
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
 
+            ContactMessage.objects.create(name=name, email=email, message=message)
+
             subject = f"Portfolio Contact from {name}"
             full_message = f"Message from {name} ({email}):\n\n{message}"
+            send_mail(subject, full_message, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
 
-            send_mail(
-                subject,
-                full_message,
-                settings.DEFAULT_FROM_EMAIL,  # sender
-                [settings.DEFAULT_FROM_EMAIL],  # recipient (your email)
-            )
-            return redirect('contact')  # reload page after submit
+            return redirect('contact')
     else:
         form = ContactForm()
-
     return render(request, 'contact.html', {'form': form})
