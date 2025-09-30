@@ -2,8 +2,8 @@ from django.db import models
 
 class Skill(models.Model):
     name = models.CharField(max_length=50)
-    level = models.PositiveIntegerField(help_text="Level in %")
-    
+    level = models.PositiveIntegerField(help_text="Percentage 0-100")
+
     def __str__(self):
         return self.name
 
@@ -13,16 +13,15 @@ class Project(models.Model):
     image = models.ImageField(upload_to='projects/')
     github_url = models.URLField(blank=True, null=True)
     demo_url = models.URLField(blank=True, null=True)
-    
+
     def __str__(self):
         return self.title
 
-class ContactMessage(models.Model):
-    name = models.CharField(max_length=50)
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
     email = models.EmailField()
-    subject = models.CharField(max_length=100)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.email}"

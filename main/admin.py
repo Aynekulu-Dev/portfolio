@@ -1,19 +1,15 @@
 from django.contrib import admin
-from .models import Project, ContactMessage
-from .models import About
-from .models import Skill
+from .models import Skill, Project, Contact
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("title", "tech_stack", "github_link", "live_demo")
-
-@admin.register(ContactMessage)
-class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'created_at')
-    ordering = ('-created_at',)
-@admin.register(About)
-class AboutAdmin(admin.ModelAdmin):
-    list_display = ('name', 'degree')
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'level')
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'github_url', 'demo_url')
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_at')
+    readonly_fields = ('created_at',)
