@@ -2,10 +2,9 @@
 {% block title %}Contact Me - Aynekulu{% endblock %}
 {% block content %}
 
-<section id="contact" class="py-5 bg-light">
+<section id="contact" class="py-5 bg-light fade-in">
   <div class="container">
     <h2 class="text-center mb-5">Contact Me</h2>
-    
     <div class="row justify-content-center">
       <div class="col-md-8">
         <form method="post" action="{% url 'contact' %}" class="shadow p-4 bg-white rounded">
@@ -14,11 +13,14 @@
             <div class="col-md-6">{{ form.name }}</div>
             <div class="col-md-6">{{ form.email }}</div>
           </div>
-          <div class="mb-3">{{ form.subject }}</div>
           <div class="mb-3">{{ form.message }}</div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Send Message</button>
-          </div>
+          <div class="mb-3">{{ form.captcha }}</div>  <!-- Add CAPTCHA field -->
+          <button type="submit" class="btn btn-primary w-100">Send Message</button>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
         </form>
       </div>
     </div>

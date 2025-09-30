@@ -1,16 +1,89 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="{% if request.COOKIES.mode == 'dark' %}dark-mode{% else %}light-mode{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Aynekulu Molla, Full Stack Developer, Data Scientist, ML/AI Engineer">
+    <meta name="keywords" content="Aynekulu Molla, Portfolio, Full Stack, Data Science, Machine Learning, AI">
     <title>{% block title %}Aynekulu Molla Portfolio{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <link rel="manifest" href="{% static 'manifest.json' %}">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Aynekulu Molla</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
+                        <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=all">All</a></li>
+                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=data-science">Data Science</a></li>
+                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=full-stack">Full Stack</a></li>
+                            <li><a class="dropdown-item" href="{% url 'projects' %}?filter=ml-ai">ML/AI</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light mode-toggle" id="modeToggle">Toggle Mode</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <p>&copy; 2025 Aynekulu Molla. All rights reserved.</p>
+        <a href="{% static 'files/resume.pdf' %}" class="btn btn-outline-light btn-sm mt-2" download>Download Resume</a>
+        <p class="mt-2"><a href="https://calendly.com/aynekulu" target="_blank" class="text-muted">Schedule a Meeting</a></p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script>
+  // Create a 3D scene
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true }); // Alpha for transparency
+  renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3); // Adjust size
+  document.getElementById('hero').appendChild(renderer.domElement);
+
+  // Create a cube
+  const geometry = new THREE.BoxGeometry(2, 2, 2);
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.7 });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+  camera.position.z = 5;
+
+  // Animation
+  function animate() {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth * 0.3, window.innerHeight * 0.3);
+  });
+</script>
 </body>
 </html>

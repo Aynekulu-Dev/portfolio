@@ -6,9 +6,11 @@
 <section id="hero" class="text-center text-white bg-dark py-5 fade-in">
   <div class="container">
     <h1 class="display-4 fw-bold">Hi, I'm Aynekulu Molla</h1>
-    <p class="lead mb-4">Full Stack Developer | Web Enthusiast | Problem Solver</p>
-    <a href="#projects" class="btn btn-primary btn-lg">View My Work</a>
-    <a href="#contact" class="btn btn-outline-light btn-lg ms-2">Contact Me</a>
+    <p class="lead mb-4">Full Stack Developer | Data Scientist | ML/AI Engineer</p>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'projects' %}?filter=all" class="btn btn-primary btn-lg me-2">View My Work</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Contact Me</a>
+    </div>
   </div>
 </section>
 
@@ -40,10 +42,10 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="card shadow-sm">
-                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" loading="lazy">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{ project.title }}</h5>
-                  <p class="card-text">{{ project.description|truncatewords:25 }}</p>
+                  <p class="card-text">{{ project.description|truncatewords:20 }}</p>
                   <div>
                     {% if project.github_url %}
                     <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">GitHub</a>
@@ -68,14 +70,6 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
-</section>
-
-<!-- Call to Action -->
-<section class="text-center py-5 fade-in">
-  <div class="container">
-    <h3>Interested in working together?</h3>
-    <a href="#contact" class="btn btn-primary btn-lg mt-3">Let's Talk</a>
   </div>
 </section>
 

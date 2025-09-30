@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Skill, Project, Contact
+from .models import About, Skill, Project, Contact, BlogPost
+
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
@@ -13,3 +17,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'created_at')
     readonly_fields = ('created_at',)
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
