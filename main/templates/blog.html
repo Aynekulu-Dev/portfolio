@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Blog - Aynekulu Molla{% endblock %}
+{% block content %}
+{% load static %}
+<section id="blog" class="py-5 fade-in">
+  <div class="container">
+    <h2 class="text-center mb-5">My Blog</h2>
+    <div class="row">
+      {% for post in posts %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{% static 'images/blog-placeholder.jpg' %}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+            <a href="{% url 'blog_detail' post.id %}" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-muted">No blog posts yet—add them from the admin panel!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
