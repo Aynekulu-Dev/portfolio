@@ -1,6 +1,19 @@
-pyc
-pycache/
+# Python/Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
 .env
-db.sqlite3
-media/
 venv/
+staticfiles/
+media/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Other
+*.bak
+*.tmp
