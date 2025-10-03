@@ -1,3 +1,4 @@
+html
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
@@ -7,29 +8,30 @@
     <div class="row align-items-center">
       <div class="col-md-4 text-center mb-4 mb-md-0">
         <div class="profile-picture-container">
-          {% if about.profile_image %}
-            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}'s Profile" class="profile-img rounded-circle shadow-lg img-fluid" style="width: 300px; height: 300px; object-fit: cover;" loading="lazy">
+          {% if about and about.profile_image %}
+            <img src="{{ about.profile_image.url }}" alt="{{ about.name|default:'Profile' }}'s Profile" class="profile-img rounded-circle shadow-lg img-fluid" style="width: 300px; height: 300px; object-fit: cover;" loading="lazy">
           {% else %}
             <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-lg img-fluid" alt="Default Avatar" style="width: 300px; height: 300px; object-fit: cover;" loading="lazy">
           {% endif %}
         </div>
-        <h3 class="fw-bold mt-3">{{ about.name }}</h3>
-        <p class="text-muted lead">{{ about.degree }}</p>
+        <h3 class="fw-bold mt-3">{{ about.name|default:'Aynekulu Molla' }}</h3>
+        <p class="text-muted lead">{{ about.degree|default:'BSc in Software Engineering' }}</p>
       </div>
       <div class="col-md-8">
         <div class="card shadow-sm p-4 h-100">
           <h4 class="mb-3">Bio</h4>
           <p class="lead">
-            I’m Aynekulu Molla, a passionate Software Engineering graduate from Adama Science and Technology University in Ethiopia. My journey in tech began with a curiosity for solving problems through code, leading me to master full-stack development with Django, Python, and modern frameworks. Beyond coding, I’ve delved into data science, where I analyze complex datasets to uncover insights, and machine learning, where I build models to predict trends—like my COVID-19 analysis project.
+            {% if about and about.bio %}
+              {{ about.bio }}
+            {% else %}
+              Software Engineering graduate from Adama Science and Technology University with a passion for full-stack development, data science, and AI.
+            {% endif %}
           </p>
-          <p class="lead">
-            My dream is to leverage AI to create innovative solutions that impact lives positively. I thrive on challenges, from designing responsive web applications to exploring neural networks. In my free time, I enjoy experimenting with new technologies, contributing to open-source projects, and learning from the global tech community. I’m excited to collaborate, grow, and contribute to the future of technology!
-          </p>
-          {% if about.certificate_image %}
+          {% if about and about.certificate_image %}
             <div class="mt-4">
               <h5>Certification</h5>
               <div class="certificate-container">
-                <img src="{{ about.certificate_image.url }}" class="img-fluid rounded shadow-sm certificate-img" alt="{{ about.name }}'s Certificate" style="max-width: 100%; height: auto;" loading="lazy">
+                <img src="{{ about.certificate_image.url }}" class="img-fluid rounded shadow-sm certificate-img" alt="{{ about.name|default:'Profile' }}'s Certificate" style="max-width: 100%; height: auto;" loading="lazy">
               </div>
             </div>
           {% endif %}
