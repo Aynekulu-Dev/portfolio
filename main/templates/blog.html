@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block title %}Blog - Aynekulu Molla{% endblock %}
 {% block content %}
@@ -9,7 +10,7 @@
       {% for post in posts %}
       <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
-          <img src="{% static 'images/blog-placeholder.jpg' %}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+          <img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/blog-placeholder.jpg' %}{% endif %}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;" loading="lazy">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">{{ post.content|truncatewords:20 }}</p>

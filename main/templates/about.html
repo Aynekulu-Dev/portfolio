@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% block content %}
 {% load static %}
 <section id="about" class="py-5 fade-in">
@@ -7,9 +8,9 @@
       <div class="col-md-4 text-center mb-4 mb-md-0">
         <div class="profile-picture-container">
           {% if about.profile_image %}
-            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}'s Profile" class="profile-img rounded-circle shadow-lg img-fluid" style="width: 300px; height: 300px; object-fit: cover;">
+            <img src="{{ about.profile_image.url }}" alt="{{ about.name }}'s Profile" class="profile-img rounded-circle shadow-lg img-fluid" style="width: 300px; height: 300px; object-fit: cover;" loading="lazy">
           {% else %}
-            <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-lg img-fluid" alt="Default Avatar" style="width: 300px; height: 300px; object-fit: cover;">
+            <img src="{% static 'images/avatar-placeholder.png' %}" class="profile-img rounded-circle shadow-lg img-fluid" alt="Default Avatar" style="width: 300px; height: 300px; object-fit: cover;" loading="lazy">
           {% endif %}
         </div>
         <h3 class="fw-bold mt-3">{{ about.name }}</h3>
@@ -28,7 +29,7 @@
             <div class="mt-4">
               <h5>Certification</h5>
               <div class="certificate-container">
-                <img src="{{ about.certificate_image.url }}" class="img-fluid rounded shadow-sm certificate-img" alt="{{ about.name }}'s Certificate" style="max-width: 100%; height: auto;">
+                <img src="{{ about.certificate_image.url }}" class="img-fluid rounded shadow-sm certificate-img" alt="{{ about.name }}'s Certificate" style="max-width: 100%; height: auto;" loading="lazy">
               </div>
             </div>
           {% endif %}

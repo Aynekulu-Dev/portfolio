@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block title %}Projects - Aynekulu Molla{% endblock %}
 {% block content %}
@@ -13,9 +14,9 @@
     </div>
     <div class="row project-container" id="project-container">
       {% for project in projects %}
-      <div class="col-md-4 mb-4 project-item" data-category="{{ project.category|default:'all' }}">
+      <div class="col-md-4 mb-4 project-item" data-category="{{ project.category }}">
         <div class="card h-100 shadow-sm">
-          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+          <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;" loading="lazy">
           <div class="card-body">
             <h5 class="card-title">{{ project.title }}</h5>
             <p class="card-text">{{ project.description|truncatewords:15 }}</p>
@@ -33,7 +34,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <img src="{{ project.image.url }}" class="img-fluid mb-3" alt="{{ project.title }}" style="max-height: 300px; object-fit: cover;">
+              <img src="{{ project.image.url }}" class="img-fluid mb-3" alt="{{ project.title }}" style="max-height: 300px; object-fit: cover;" loading="lazy">
               <p>{{ project.description }}</p>
               {% if project.github_url %}
                 <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark me-2">GitHub</a>
