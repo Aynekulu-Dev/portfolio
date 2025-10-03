@@ -20,6 +20,8 @@ def projects_view(request):
 def about_view(request):
     about = About.objects.first()
     skills = Skill.objects.all()
+    if not about:
+        messages.warning(request, 'No About information found. Please add details in the admin panel.')
     return render(request, 'about.html', {'about': about, 'skills': skills})
 
 def contact_view(request):
@@ -29,7 +31,7 @@ def contact_view(request):
             contact = form.save()
             send_mail(
                 subject=f"New Contact Message from {contact.name}",
-                message=contact.message,
+                message=f"Message: {contact.message}\nFrom: {contact.email}",
                 from_email=contact.email,
                 recipient_list=[settings.DEFAULT_FROM_EMAIL],
                 fail_silently=False,
