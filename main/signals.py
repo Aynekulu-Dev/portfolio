@@ -1,14 +1,23 @@
 from django.db.models.signals import post_migrate
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
+from django.conf import settings
+import os
 
 @receiver(post_migrate)
 def create_default_superuser(sender, **kwargs):
     User = get_user_model()
+
+    username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
+    email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
+    password = os.getenv('DJANGO_SUPERUSER_PASSWORD', 'admin123')
+
     if not User.objects.filter(is_superuser=True).exists():
         User.objects.create_superuser(
-            username='admin',
-            email='Aynekulu4341@gmail.com',
-            password='Am@mt4188'  # Use a strong password
+            username=username,
+            email=email,
+            password=password
         )
-        print("Superuser created automatically.")
+        print(f"Superuser '{username}' created automatically.")
+    else:
+        print("Superuser already exists, skipping creation.")
