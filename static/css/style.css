@@ -18,7 +18,7 @@ body.dark-mode {
 }
 
 .hero {
-    background: url('../images/hero-bg.jpg') center/cover no-repeat;
+    background: var(--bg-dark); /* Fallback to dark background color */
     height: 80vh;
     color: var(--text-light);
     display: flex;
