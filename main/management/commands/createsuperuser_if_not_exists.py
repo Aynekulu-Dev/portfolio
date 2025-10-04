@@ -9,8 +9,12 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 username='admin',
                 email='Aynekulu4341@gmail.com',
-                password='Am@mt4188'  # Replace with a strong password
+                password='NewAdminPass123!'  # Your new password here
             )
             self.stdout.write(self.style.SUCCESS('Superuser created successfully'))
         else:
-            self.stdout.write(self.style.SUCCESS('Superuser already exists'))
+            # Reset existing superuser password
+            superuser = User.objects.filter(is_superuser=True).first()
+            superuser.set_password('NewAdminPass123!')  # Your new password here
+            superuser.save()
+            self.stdout.write(self.style.SUCCESS('Superuser password reset successfully'))
