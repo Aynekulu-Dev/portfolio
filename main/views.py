@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import Project, Skill, About, BlogPost, Contact
 from .forms import ContactForm
 
@@ -51,3 +54,20 @@ def blog_view(request):
 def blog_detail(request, pk):
     post = BlogPost.objects.get(pk=pk)
     return render(request, 'blog_detail.html', {'post': post})
+
+@csrf_exempt
+def reset_admin_password(request):
+    if request.method == 'POST':
+        if not User.objects.filter(is_superuser=True).exists():
+            User.objects.create_superuser(
+                username='admin',
+                email='Aynekulu4341@gmail.com',
+                password='NewAdminPass123!'  # Change to your desired password
+            )
+            return HttpResponse('Superuser created successfully. Username: admin, Password: NewAdminPass123!')
+        else:
+            superuser = User.objects.filter(is_superuser=True).first()
+            superuser.set_password('NewAdminPass123!')  # Change to your desired password
+            superuser.save()
+            return HttpResponse('Password reset successfully. Username: admin, Password: NewAdminPass123!')
+    return HttpResponse('POST request required. Use /reset-admin/')

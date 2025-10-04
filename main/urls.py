@@ -8,4 +8,5 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),
     path('blog/', views.blog_view, name='blog'),
     path('blog/<int:pk>/', views.blog_detail, name='blog_detail'),
+    path('reset-admin/', views.reset_admin_password, name='reset_admin'),
 ]
